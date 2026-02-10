@@ -7,6 +7,9 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { LayoutComponent } from './layout/layout/layout.component';
 import { ChatComponent } from './pages/chat/chat.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -20,9 +23,11 @@ import { ChatComponent } from './pages/chat/chat.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+ FormsModule   ,
+ HttpClientModule    
   ],
-  providers: [
+  providers: [ 
     provideClientHydration()
   ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

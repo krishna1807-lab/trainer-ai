@@ -2,12 +2,24 @@ package service
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
+	"sync"
 
 	"github.com/ledongthuc/pdf"
 )
 
+var (
+	DocumentKnowledge string
+	docMutex          sync.RWMutex
+)
+
+// ⭐ Extract Text From PDF
 func ExtractTextFromPDF(fileBytes []byte) (string, error) {
+
+	if len(fileBytes) == 0 {
+		return "", errors.New("empty file")
+	}
 
 	reader := bytes.NewReader(fileBytes)
 
@@ -20,9 +32,9 @@ func ExtractTextFromPDF(fileBytes []byte) (string, error) {
 
 	totalPage := pdfReader.NumPage()
 
-	for pageIndex := 1; pageIndex <= totalPage; pageIndex++ {
+	for i := 1; i <= totalPage; i++ {
 
-		page := pdfReader.Page(pageIndex)
+		page := pdfReader.Page(i)
 
 		if page.V.IsNull() {
 			continue
@@ -36,19 +48,38 @@ func ExtractTextFromPDF(fileBytes []byte) (string, error) {
 		text += pageText + "\n"
 	}
 
-	fmt.Println("EXTRACTED TEXT SIZE:", len(text))
+	fmt.Println("Extracted text size:", len(text))
+
+	if len(text) == 0 {
+		return "", errors.New("no text extracted")
+	}
 
 	return text, nil
 }
 
-var DocumentKnowledge string
-
+// ⭐ Save Document Knowledge (Thread Safe)
 func SaveDocumentText(text string) {
-	DocumentKnowledge += "\n" + text
-	fmt.Println("DocumentKnowledge", DocumentKnowledge)
 
+	docMutex.Lock()
+	defer docMutex.Unlock()
+
+	DocumentKnowledge += "\n" + text
 }
 
+// ⭐ Get Knowledge
 func GetDocumentKnowledge() string {
+
+	docMutex.RLock()
+	defer docMutex.RUnlock()
+
 	return DocumentKnowledge
+}
+
+// ⭐ Optional: Reset Knowledge (Future Feature)
+func ResetDocumentKnowledge() {
+
+	docMutex.Lock()
+	defer docMutex.Unlock()
+
+	DocumentKnowledge = ""
 }

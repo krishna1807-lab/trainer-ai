@@ -3,8 +3,11 @@ package service
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
+	"time"
+
 	"trainer-ai/internal/config"
 	"trainer-ai/internal/memory"
 	"trainer-ai/internal/model"
@@ -12,8 +15,17 @@ import (
 
 func CallGroq(prompt string) (string, error) {
 
+	if prompt == "" {
+		return "", errors.New("prompt cannot be empty")
+	}
+
 	apiKey := config.GetEnv("GROQ_API_KEY")
 	modelName := config.GetEnv("GROQ_MODEL")
+
+	if apiKey == "" {
+		return "", errors.New("missing GROQ_API_KEY")
+	}
+
 	docText := GetDocumentKnowledge()
 
 	systemPrompt := `
@@ -30,6 +42,7 @@ DOCUMENT KNOWLEDGE:
 -------------------
 `
 
+	// ⭐ Build Messages
 	messages := []model.Message{
 		{
 			Role:    "system",
@@ -47,35 +60,54 @@ DOCUMENT KNOWLEDGE:
 		Model:       modelName,
 		Messages:    messages,
 		Temperature: 0.7,
-		MaxTokens:   300,
+		MaxTokens:   500,
 	}
 
-	jsonData, _ := json.Marshal(reqBody)
+	jsonData, err := json.Marshal(reqBody)
+	if err != nil {
+		return "", err
+	}
 
-	req, _ := http.NewRequest(
+	req, err := http.NewRequest(
 		"POST",
 		"https://api.groq.com/openai/v1/chat/completions",
 		bytes.NewBuffer(jsonData),
 	)
+	if err != nil {
+		return "", err
+	}
 
 	req.Header.Set("Authorization", "Bearer "+apiKey)
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: 60 * time.Second,
+	}
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return "", err
 	}
 	defer resp.Body.Close()
 
-	body, _ := io.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
 
 	var groqResp model.GroqResponse
-	json.Unmarshal(body, &groqResp)
+	err = json.Unmarshal(body, &groqResp)
+	if err != nil {
+		return "", err
+	}
+
+	if len(groqResp.Choices) == 0 {
+		return "", errors.New("empty response from groq")
+	}
 
 	reply := groqResp.Choices[0].Message.Content
 
-	// Save memory
+	// ⭐ Save Memory
 	memory.AddMessage(model.Message{Role: "user", Content: prompt})
 	memory.AddMessage(model.Message{Role: "assistant", Content: reply})
 
