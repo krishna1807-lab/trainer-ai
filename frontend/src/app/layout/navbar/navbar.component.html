@@ -1,0 +1,147 @@
+<header
+  class="
+    sticky top-0 z-50
+    h-16
+    bg-white/90 backdrop-blur-md
+    border-b border-green-100
+    shadow-sm
+    flex items-center justify-between
+    px-4 md:px-8
+  "
+>
+
+  <!-- LEFT : LOGO -->
+  <div class="flex items-center gap-3 select-none">
+
+    <!-- Logo Circle -->
+    <div
+      class="
+        w-10 h-10
+        rounded-2xl
+        bg-gradient-to-br from-green-500 to-emerald-600
+        flex items-center justify-center
+        text-white font-bold text-lg
+        shadow-md
+        shadow-green-100
+      "
+    >
+      S
+    </div>
+
+    <!-- Brand Text -->
+    <div class="flex flex-col leading-tight">
+      <span class="text-lg font-semibold text-gray-800 tracking-tight">
+        Scribex
+        <span class="text-green-600">.ai</span>
+      </span>
+
+      <span class="text-xs text-gray-400 hidden sm:block">
+        AI Knowledge Platform
+      </span>
+    </div>
+
+  </div>
+
+  <!-- RIGHT : ACTIONS -->
+  <div class="flex items-center gap-3 md:gap-5">
+
+    <!-- Notification Button -->
+    <button
+      aria-label="Notifications"
+      class="
+        relative
+        p-2.5 rounded-xl
+        hover:bg-green-50
+        transition-all duration-200
+        active:scale-95
+        group
+      "
+    >
+
+      <!-- Icon -->
+      <iconify-icon
+        icon="lucide:bell"
+        class="
+          w-5 h-5
+          text-gray-600
+          group-hover:text-green-600
+          transition-colors duration-200
+        "
+      ></iconify-icon>
+
+      <!-- Notification Dot -->
+      <span
+        class="
+          absolute top-1 right-1
+          w-2.5 h-2.5
+          bg-green-500
+          rounded-full
+          ring-2 ring-white
+        "
+      ></span>
+
+    </button>
+
+    <!-- Divider -->
+    <div class="hidden md:block h-6 w-px bg-gray-200"></div>
+
+    <!-- User Info -->
+    <div
+      class="
+        flex items-center gap-3
+        cursor-pointer
+        group
+        hover:bg-green-50
+        px-2 py-1 rounded-xl
+        transition
+      "
+    >
+
+      <!-- Avatar -->
+      <div
+        class="
+          w-9 h-9
+          rounded-xl
+          bg-gradient-to-br from-green-400 to-emerald-500
+          text-white
+          flex items-center justify-center
+          font-semibold text-sm
+          shadow-sm
+        "
+      >
+        K
+      </div>
+
+      <!-- Username -->
+      <div class="hidden sm:flex flex-col leading-tight">
+        <span
+          class="
+            text-sm font-semibold text-gray-800
+            group-hover:text-green-600
+            transition-colors
+          "
+        >
+          Krishna
+        </span>
+        <span class="text-xs text-gray-400">
+          Developer
+        </span>
+      </div>
+
+      <!-- Dropdown Arrow -->
+      <iconify-icon
+        icon="lucide:chevron-down"
+        class="
+          hidden sm:block
+          w-4 h-4
+          text-gray-400
+          group-hover:text-green-600
+          transition
+        "
+      ></iconify-icon>
+
+    </div>
+
+  </div>
+
+</header>

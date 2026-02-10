@@ -1,0 +1,26 @@
+<div class="h-screen flex flex-col bg-gray-50">
+
+  <!-- ⭐ TOP NAVBAR (FULL WIDTH) -->
+  <app-navbar></app-navbar>
+
+  <!-- ⭐ MAIN BODY -->
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- LEFT SIDEBAR -->
+    <app-sidebar></app-sidebar>
+
+    <!-- RIGHT CONTENT -->
+    <main
+      class="
+        flex-1
+        overflow-auto
+        bg-gray-50
+        p-4 md:p-6
+      "
+    >
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+
+</div>
