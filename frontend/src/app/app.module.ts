@@ -9,6 +9,10 @@ import { LayoutComponent } from './layout/layout/layout.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { DocumentComponent } from './pages/document/document.component';
+import { FlashcardComponent } from './pages/flashcard/flashcard.component';
 
 
 
@@ -19,6 +23,10 @@ import { HttpClientModule } from '@angular/common/http';
     SidebarComponent,
     LayoutComponent,
     ChatComponent,
+    DashboardComponent,
+    ProfileComponent,
+    DocumentComponent,
+    FlashcardComponent,
 
   ],
   imports: [
