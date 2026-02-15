@@ -1,30 +1,150 @@
-<div class="h-full flex flex-col bg-gradient-to-br from-gray-50 to-green-50/30 rounded-2xl">
+<div class="h-full flex overflow-hidden">
 
-  <!-- ⭐ CHAT MESSAGES -->
-  <div
-    #scrollContainer
-    class="flex-1 overflow-y-auto px-4 md:px-8 py-6 space-y-6"
-  >
+  <!-- ⭐ LEFT CHAT -->
+<div class="flex-1 flex flex-col overflow-hidden pr-2">
 
+  <div class="flex-1 flex flex-col bg-gradient-to-br from-gray-50 to-green-50/30 rounded-xl overflow-hidden">
+
+    <!-- CHAT SCROLL -->
     <div
-      *ngFor="let msg of messages"
-      class="flex"
-      [ngClass]="msg.role === 'user' ? 'justify-end' : 'justify-start'"
+      #scrollContainer
+      class="flex-1 overflow-y-auto px-3 md:px-5 py-4 space-y-3"
     >
 
+      <!-- EMPTY -->
+      <div *ngIf="messages.length === 0"
+           class="h-full flex items-center justify-center text-gray-400 text-xs">
+        Start conversation with Scribex AI
+      </div>
+
+      <!-- MESSAGES -->
       <div
-        class="max-w-[75%] rounded-2xl px-4 py-3 shadow-sm"
-        [ngClass]="
-          msg.role === 'user'
-          ? 'bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-br-md'
-          : 'bg-white border border-gray-100 text-gray-700 rounded-bl-md'
-        "
+        *ngFor="let msg of messages"
+        class="flex"
+        [ngClass]="msg.role === 'user' ? 'justify-end' : 'justify-start'"
       >
 
-        <p class="text-sm whitespace-pre-line">{{ msg.content }}</p>
+      <div class="flex flex-col max-w-[65%]"
+     [ngClass]="msg.role === 'user' ? 'items-end' : 'items-start'">
 
-        <div class="text-[10px] mt-2 opacity-70 text-right">
-          {{ msg.time }}
+  <!-- MESSAGE BUBBLE -->
+  <div
+    class="rounded-xl px-3 py-2 shadow-sm"
+    [ngClass]="
+      msg.role === 'user'
+        ? 'bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-br-sm'
+        : 'bg-white border border-gray-100 text-gray-700 rounded-bl-sm'
+    "
+  >
+    <p class="text-[13px] leading-relaxed whitespace-pre-line">
+      {{ msg.content }}
+    </p>
+  </div>
+
+  <!-- ⭐ TIME OUTSIDE -->
+  <span class="text-[10px] text-gray-400 mt-1 px-1">
+    {{ msg.time }}
+  </span>
+
+</div>
+
+
+      </div>
+
+    </div>
+
+    <!-- INPUT -->
+    <div class="shrink-0 border-t border-green-100 bg-white/80 backdrop-blur-md p-2 md:p-3">
+
+      <div class="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-2 py-1.5 shadow-sm">
+
+        <!-- ATTACH -->
+        <button
+          (click)="fileInput.click()"
+          class="p-1.5 rounded-lg hover:bg-green-50 transition"
+        >
+          <svg class="w-4 h-4 text-gray-500 hover:text-green-600"
+            fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M21.44 11.05l-8.49 8.49a5.5 5.5 0 01-7.78-7.78l9.19-9.19
+              a3.5 3.5 0 014.95 4.95l-9.19 9.19a1.5 1.5 0 01-2.12-2.12l8.49-8.49"/>
+          </svg>
+        </button>
+
+        <input #fileInput type="file" hidden (change)="onFileSelected($event)" />
+
+        <!-- INPUT -->
+        <input
+          [(ngModel)]="userInput"
+          (keyup.enter)="sendMessage()"
+          placeholder="Ask Scribex anything..."
+          class="flex-1 bg-transparent outline-none text-[13px]"
+        />
+
+        <!-- SEND -->
+        <button
+          (click)="sendMessage()"
+          class="bg-gradient-to-br from-green-500 to-emerald-600 text-white p-1.5 rounded-lg hover:shadow-md transition"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+  <!-- ⭐ RIGHT HISTORY -->
+<div class="w-72 hidden lg:flex flex-col overflow-hidden">
+
+  <div class="flex-1 flex flex-col bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+
+    <!-- HEADER -->
+    <div class="shrink-0 px-3 py-3 border-b border-gray-100">
+      <h2 class="font-semibold text-sm text-gray-800">Chat History</h2>
+      <p class="text-[11px] text-gray-400">Recent conversations</p>
+    </div>
+
+    <!-- LIST -->
+    <div class="flex-1 overflow-y-auto p-2 space-y-1.5">
+
+      <div
+        *ngFor="let chat of chatHistory"
+        class="group p-2 rounded-lg cursor-pointer hover:bg-green-50 transition border border-transparent hover:border-green-100"
+      >
+
+        <div class="flex items-start gap-2">
+
+          <!-- ICON -->
+          <div class="p-1.5 bg-green-50 rounded-md">
+            <svg class="w-3.5 h-3.5 text-green-600"
+              fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 7v5l3 2"></path>
+            </svg>
+          </div>
+
+          <!-- TEXT -->
+          <div class="flex-1 min-w-0">
+            <p class="text-[13px] font-medium text-gray-800 truncate">
+              {{ chat.title }}
+            </p>
+            <p class="text-[11px] text-gray-400 truncate">
+              {{ chat.preview }}
+            </p>
+          </div>
+
+        </div>
+
+        <div class="text-[10px] text-gray-400 mt-1">
+          {{ chat.time }}
         </div>
 
       </div>
@@ -33,54 +153,7 @@
 
   </div>
 
-  <!-- ⭐ INPUT DOCK -->
-  <div class="border-t border-green-100 bg-white/80 backdrop-blur-md p-3 md:p-4">
+</div>
 
-    <div class="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-3 py-2 shadow-sm">
-
-      <!-- ATTACH BUTTON -->
-      <button
-        (click)="fileInput.click()"
-        class="p-2 rounded-xl hover:bg-green-50 transition"
-      >
-        <!-- Paperclip SVG -->
-        <svg class="w-5 h-5 text-gray-500 hover:text-green-600"
-          fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M21.44 11.05l-8.49 8.49a5.5 5.5 0 01-7.78-7.78l9.19-9.19
-            a3.5 3.5 0 014.95 4.95l-9.19 9.19a1.5 1.5 0 01-2.12-2.12l8.49-8.49"/>
-        </svg>
-      </button>
-
-      <input
-        #fileInput
-        type="file"
-        hidden
-        (change)="onFileSelected($event)"
-      />
-
-      <!-- TEXT INPUT -->
-      <input
-        [(ngModel)]="userInput"
-        (keyup.enter)="sendMessage()"
-        placeholder="Ask Scribex anything..."
-        class="flex-1 bg-transparent outline-none text-sm px-2"
-      />
-
-      <!-- SEND BUTTON -->
-      <button
-        (click)="sendMessage()"
-        class="bg-gradient-to-br from-green-500 to-emerald-600 text-white p-2 rounded-xl hover:shadow-md transition"
-      >
-        <!-- Send Arrow SVG -->
-        <svg class="w-5 h-5" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </button>
-
-    </div>
-
-  </div>
 
 </div>

@@ -31,6 +31,10 @@ func CallGroq(prompt string) (string, error) {
 	systemPrompt := `
 You are an Enterprise Trainer AI.
 
+You can have a General Greeting.
+
+If Required answer with emojies
+
 You MUST answer using ONLY the document knowledge provided below.
 
 If answer is not present in document, reply:

@@ -1,23 +1,16 @@
-<div class="h-screen flex flex-col bg-gray-50">
+<div class="h-screen flex flex-col bg-gray-50 overflow-hidden">
 
-  <!-- ⭐ TOP NAVBAR (FULL WIDTH) -->
-  <app-navbar></app-navbar>
+  <!--NAVBAR -->
+  <app-navbar class="shrink-0"></app-navbar>
 
-  <!-- ⭐ MAIN BODY -->
+  <!-- BODY -->
   <div class="flex flex-1 overflow-hidden">
 
-    <!-- LEFT SIDEBAR -->
-    <app-sidebar class="h-full"></app-sidebar>
+    <!-- SIDEBAR -->
+    <app-sidebar class="h-full shrink-0"></app-sidebar>
 
-    <!-- RIGHT CONTENT -->
-    <main
-      class="
-        flex-1
-        overflow-auto
-        bg-gray-50
-        p-4 md:p-6
-      "
-    >
+    <!--PAGE CONTENT -->
+    <main class="flex-1 overflow-hidden bg-gray-50">
       <router-outlet></router-outlet>
     </main>
 

@@ -7,6 +7,29 @@ import { DocumentService } from '../../service/document.service';
   templateUrl: './chat.component.html'
 })
 export class ChatComponent {
+  chatHistory = [
+  {
+    title: 'Angular RAG Architecture',
+    preview: 'Explain hybrid RAG with vector DB...',
+    time: '2 min ago'
+  },
+  {
+    title: 'PDF Flashcard Generation',
+    preview: 'Generate flashcards from uploaded PDF...',
+    time: '1 hour ago'
+  },
+  {
+    title: 'OpenAI vs Local LLM',
+    preview: 'Cost comparison for deployment...',
+    time: 'Yesterday'
+  },
+  {
+    title: 'Embedding Model Selection',
+    preview: 'Best embedding model for docs...',
+    time: '2 days ago'
+  }
+];
+
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 

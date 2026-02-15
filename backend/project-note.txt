@@ -1,2 +1,47 @@
 hey , Hi
 git push -u origin main
+
+backend/
+│
+├── main.go
+├── .env
+├── go.mod
+├── go.sum
+│
+└── internal/
+    │
+    ├── config/
+    │     └── env.go
+    │
+    ├── controller/
+    │     ├── chat_controller.go
+    │     └── document_controller.go
+    │
+    ├── memory/
+    │     └── memory_store.go
+    │
+    ├── modal/
+    │     ├── api_response.go
+    │     ├── chat_modal.go
+    │     ├── document_modal.go        
+    │     └── chunk_modal.go           
+    │
+    ├── service/
+    │     ├── document_service.go
+    │     ├── groq_service.go
+    │     ├── rag_service.go            
+    │     └── embedding_service.go      
+    │
+    ├── rag/                            
+    │     ├── chunker.go
+    │     ├── embedder.go
+    │     └── retriever.go
+    │
+    ├── vector/                        
+    │     └── pgvector_store.go
+    │
+    ├── repository/                    
+    │     └── document_repository.go
+    │
+    └── utils/
+          └── response.go

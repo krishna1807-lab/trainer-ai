@@ -1,1 +1,132 @@
-<p>dashboard works!</p>
+<div class="h-full overflow-y-auto px-4 py-4 space-y-5">
+
+  <!-- Header -->
+<div class="flex items-center justify-between">
+  <div>
+    <h1 class="text-xl font-semibold text-gray-800">Dashboard</h1>
+    <p class="text-xs text-gray-500">Welcome back to Scribex AI</p>
+  </div>
+</div>
+
+  <!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+  <div
+    *ngFor="let stat of stats"
+    class="bg-white rounded-xl shadow-sm hover:shadow-md transition p-4 flex items-center gap-3"
+  >
+
+    <!-- Icon -->
+    <div class="p-2 bg-gray-100 rounded-lg">
+
+      <!-- Document -->
+      <svg *ngIf="stat.icon === 'document'"
+        class="w-5 h-5 text-indigo-600"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M7 7h10M7 11h10M7 15h6M5 3h10l4 4v14H5z"/>
+      </svg>
+
+      <!-- Flash -->
+      <svg *ngIf="stat.icon === 'flashcard'"
+        class="w-5 h-5 text-pink-600"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M13 3L4 14h7l-1 7 9-11h-7z"/>
+      </svg>
+
+      <!-- Passed -->
+      <svg *ngIf="stat.icon === 'passed'"
+        class="w-5 h-5 text-green-600"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+
+    <!-- Text -->
+    <div>
+      <p class="text-xs text-gray-500">{{ stat.title }}</p>
+      <h2 class="text-lg font-semibold text-gray-800">{{ stat.value }}</h2>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="bg-white rounded-xl shadow-sm p-4">
+
+  <!-- Header Row -->
+  <div class="flex items-center gap-2 mb-4">
+
+    <!-- Timer Icon -->
+    <div class="p-1.5 bg-indigo-50 rounded-md">
+      <svg
+        class="w-4 h-4 text-indigo-600"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor">
+        <circle cx="12" cy="12" r="9" stroke-width="2"/>
+        <path d="M12 7v5l3 2" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <h2 class="text-sm font-semibold text-gray-800">
+      Recent Activity
+    </h2>
+
+  </div>
+<div class="space-y-2">
+
+  <div
+    *ngFor="let activity of recentActivities"
+    class="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition"
+  >
+
+    <!-- Icon -->
+    <div class="p-1.5 bg-gray-100 rounded-md">
+
+      <!-- Upload -->
+      <svg *ngIf="activity.icon === 'upload'"
+        class="w-4 h-4 text-indigo-600"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2"
+          d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12M8 8l4-4 4 4"/>
+      </svg>
+
+      <!-- Flash -->
+      <svg *ngIf="activity.icon === 'flash'"
+        class="w-4 h-4 text-pink-600"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2" d="M13 3L4 14h7l-1 7 9-11h-7z"/>
+      </svg>
+
+      <!-- Quiz -->
+      <svg *ngIf="activity.icon === 'quiz'"
+        class="w-4 h-4 text-green-600"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-width="2"
+          d="M9 12l2 2 4-4M7 3h10l4 4v14H3V3z"/>
+      </svg>
+
+    </div>
+
+    <!-- Text -->
+    <div class="flex-1 min-w-0">
+      <p class="text-sm font-medium text-gray-800 truncate">
+        {{ activity.title }}
+      </p>
+      <p class="text-xs text-gray-500 truncate">
+        {{ activity.description }}
+      </p>
+    </div>
+
+    <!-- Time -->
+    <span class="text-[10px] text-gray-400 whitespace-nowrap">
+      {{ activity.time }}
+    </span>
+
+  </div>
+
+</div>
+
+
+</div>
